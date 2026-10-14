@@ -1,10 +1,10 @@
 # VMware vCenter (VCSA) Integration
 
-vCenter cannot send webhooks — an alarm action can only send mail, fire an SNMP trap, or run a script on the appliance. This integration installs a small package on the vCenter Server Appliance, which the alarm runs to forward the alarm's details to Zenduty.
+vCenter cannot send webhooks — an alarm action can only send mail, fire an SNMP trap, or run a script on the appliance. This integration installs a small package on the vCenter Server Appliance, which the alarm runs to forward the alarm's details to IMR.
 
 Detailed documentation is available [here](https://www.xurrent.com/imr-help/vcsa-integration-guide).
 
-### In Zenduty
+### In IMR
 
 1. Copy the webhook URL of your vCenter integration (**Integrations → your vCenter integration → Configure**). It looks like `https://events.zenduty.com/integration/<account>/vcsa/<integration_key>/`.
 
@@ -23,7 +23,7 @@ Detailed documentation is available [here](https://www.xurrent.com/imr-help/vcsa
    sudo rpm -i zenduty-vcsa-1.0.0-1.noarch.rpm
    ```
 
-4. Open the configuration file and set `url` to the webhook URL you copied above, exactly as Zenduty generated it:
+4. Open the configuration file and set `url` to the webhook URL you copied above, exactly as IMR generated it:
 
    ```
    sudo vi /etc/zenduty/conf/zenduty-integration.conf
@@ -45,8 +45,8 @@ Detailed documentation is available [here](https://www.xurrent.com/imr-help/vcsa
 
 9. Enable the action on the status transitions you want to send. Each action has a column per transition — green to yellow, yellow to red, red to yellow, and yellow to green.
 
-   > **Important:** enable the action on the recovery transitions (red to yellow and yellow to green) as well as the escalating ones. Zenduty resolves an incident when it receives the alarm's return to a healthy status. If the action only fires on the escalating transitions, incidents will open but never resolve on their own.
+   > **Important:** enable the action on the recovery transitions (red to yellow and yellow to green) as well as the escalating ones. IMR resolves an incident when it receives the alarm's return to a healthy status. If the action only fires on the escalating transitions, incidents will open but never resolve on their own.
 
-10. Save the alarm, then trigger it to test. The alert appears under **Alerts** on the Service in Zenduty within a few seconds. Return the object to a healthy state and the incident resolves on its own.
+10. Save the alarm, then trigger it to test. The alert appears under **Alerts** on the Service in IMR within a few seconds. Return the object to a healthy state and the incident resolves on its own.
 
-Repeat steps 5 to 10 for each alarm you want to send to Zenduty. The same forwarder is used by every alarm — you only install the package once.
+Repeat steps 5 to 10 for each alarm you want to send to IMR. The same forwarder is used by every alarm — you only install the package once.
